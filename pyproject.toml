@@ -1,0 +1,21 @@
+[project]
+name = "agentic-workflows"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "faiss-cpu>=1.15.1",
+    "ipykernel>=7.4.0",
+    "langgraph>=1.2.16",
+    "langgraph-checkpoint-sqlite>=3.1.2",
+    "langgraph-cli[inmem]>=0.4.36",
+    "matplotlib>=3.11.2",
+    "mcp[cli]>=2.3.0",
+    "nbconvert>=7.17.2",
+    "nbformat>=5.11.1",
+    "openai>=3.31.0",
+    "openai-agents>=0.24.0",
+    "pandas>=3.0.6",
+    "pydantic>=2.14.1",
+    "python-dotenv>=1.2.4",
+    "requests>=2.34.2",
+]
