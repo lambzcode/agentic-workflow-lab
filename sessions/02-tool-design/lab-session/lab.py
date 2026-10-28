@@ -21,7 +21,7 @@ set_tracing_disabled(True)
 SERVER, LEDGER = "my_mcp_server.py", Path("ledger.jsonl")   # the server appends every real change to the ledger
 TASK = "Add the Lumen tracks 'Night Bus' and 'Glass Harbour' to my Focus playlist, and tell me the tempo (BPM) of each."
 MODEL = OpenAIChatCompletionsModel(
-    model=os.getenv("OPENROUTER_MODEL", "~deepseek/deepseek-pro-latest"),
+    model=os.getenv("OPENROUTER_MODEL", "~deepseek/deepseek-v4-flash-latest"),
     openai_client=AsyncOpenAI(base_url=os.getenv("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1"),
                               api_key=os.environ["OPENROUTER_API_KEY"]))
 

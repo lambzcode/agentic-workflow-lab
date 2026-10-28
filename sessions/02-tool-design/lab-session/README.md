@@ -2,7 +2,7 @@
 
 A real agent (DeepSeek through OpenRouter, with the OpenAI Agents SDK) uses a music MCP server while the network misbehaves. You watch it fail, harden the server and the dispatcher, and watch it again.
 
-Put `OPENROUTER_API_KEY=...` in a `.env` file at the repository root (see `.env.example`; never commit it). Model: `OPENROUTER_MODEL`, default `~deepseek/deepseek-pro-latest`.
+Put `OPENROUTER_API_KEY=...` in a `.env` file at the repository root (see `.env.example`; never commit it). Model: `OPENROUTER_MODEL`, default `~deepseek/deepseek-v4-flash-latest`.
 
 ```bash
 uv sync                                  # from the repository root
