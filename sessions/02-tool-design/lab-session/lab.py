@@ -96,3 +96,36 @@ async def check(dispatcher, server_file=SERVER):
         await server.call_tool("add_to_playlist", args)
     assert len(ledger()) == 1, f"{len(ledger())} changes in the ledger: {ledger()}"
     print("OK: one change")
+
+
+async def check_server(server_file=SERVER):
+    """Unit test, no model: are your annotations and argument types the ones the lab asks for?"""
+    async with HarnessServer(server_file, plain_call, "schema") as server:
+        tools = {t.name: t for t in await server.list_tools()}
+    problems = []
+
+    def hint(name, field):
+        a = tools[name].annotations
+        return getattr(a, field, None) if a else None
+
+    for name in ("search_tracks", "get_track"):
+        if hint(name, "read_only_hint") is not True:
+            problems.append(f"{name}: readOnlyHint must be True")
+        if hint(name, "idempotent_hint") is not True:
+            problems.append(f"{name}: repeating a read is harmless, so idempotentHint must be True")
+    if hint("add_to_playlist", "read_only_hint") is not False:
+        problems.append("add_to_playlist: it changes the playlist, so readOnlyHint must be False")
+    if hint("add_to_playlist", "idempotent_hint") is not True:
+        problems.append("add_to_playlist: repeating it with the same key changes nothing, so idempotentHint must be True")
+    for name in tools:
+        if hint(name, "open_world_hint") is not False:
+            problems.append(f"{name}: a closed catalogue, so openWorldHint must be False")
+    for name in ("get_track", "add_to_playlist"):
+        if "pattern" not in tools[name].input_schema["properties"]["track_id"]:
+            problems.append(f"{name}: track_id needs a pattern (T followed by three digits)")
+    if "enum" not in tools["add_to_playlist"].input_schema["properties"]["playlist"]:
+        problems.append("add_to_playlist: playlist must be a Literal of the three names")
+    if "minLength" not in tools["search_tracks"].input_schema["properties"]["query"]:
+        problems.append("search_tracks: query needs min_length=1")
+    assert not problems, "\n".join(problems)
+    print("OK: annotations and argument types are as expected")

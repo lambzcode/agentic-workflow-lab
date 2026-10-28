@@ -9,8 +9,8 @@ uv sync                                  # from the repository root
 uv run jupyter lab 02_agent_in_the_loop.ipynb
 ```
 
-**Files:** `my_mcp_server.py` (the only file you edit; the block marked "simulated service" must stay as is) and `02_agent_in_the_loop.ipynb`. `lab.py` is given code (the agent, the server wrapper, the run loop): no need to read it. Start the server by hand with `uv run my_mcp_server.py`; the notebook starts it for you.
+**Files:** `my_mcp_server.py` (the only file you edit) and `02_agent_in_the_loop.ipynb`. Given: `music_service.py` (the simulated service), `naive_server.py` (v0.1), `lab.py` (the agent, the server wrapper, the run loop and the checks): no need to read them. Start your server by hand with `uv run my_mcp_server.py`; the notebook starts it for you.
 
 **Chaos** (`LAB_CHAOS=1`, set by the notebook): every 4th read raises a 429; the 1st, 4th, 7th... write is executed, then raises `TimeoutError`. The provider replays the first result for a repeated `idempotency_key`.
 
-**You write:** the hardened tools in `my_mcp_server.py` (4 TODOs), then `idempotency_key()` and `call_with_retries()` in the notebook (use `tenacity` for the retries).
+**You write:** five type annotations in `my_mcp_server.py` (the lines marked TODO): the `READ` and `WRITE` annotations, and the types `TrackId`, `Playlist` and `Query`. The typed errors, the `idempotency_key` argument, the tool bodies and the retry dispatcher are given: read them. `check_server()` in the notebook tells you what is still wrong.
