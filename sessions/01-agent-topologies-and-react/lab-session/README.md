@@ -44,3 +44,12 @@ In each client: find the tools, the resource and the prompt (they sit in differe
 2. Call `wiki_summary` with a title that does not exist
 3. Ask "Who founded Albert School and which open datasets mention it?": count the tool calls, and which order the client chose.
 
+## Optional: run an agent on your server
+
+With `OPENROUTER_API_KEY` in your `.env`, with the server running:
+
+```bash
+uv run python demo_agent.py "Which licence does the 2002 presidential election dataset use?"
+```
+
+It prints each tool call and observation. `MAX_TURNS=1` shows what happens when the step bound is hit.
