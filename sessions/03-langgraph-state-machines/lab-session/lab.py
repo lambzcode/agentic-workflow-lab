@@ -16,7 +16,9 @@ import os
 import subprocess
 import sys
 import tempfile
+import time
 from pathlib import Path
+from types import SimpleNamespace
 from typing import Annotated, NotRequired, TypedDict
 
 from dotenv import find_dotenv, load_dotenv
@@ -224,6 +226,7 @@ def reset() -> None:
     """Back to the starting playlists, and zero model calls."""
     reset_ledger()
     CALLS.unlink(missing_ok=True)
+    llm.durations.clear()
 
 
 def model_calls() -> int:
@@ -244,6 +247,27 @@ def ask(app, question, thread="t1", **inputs) -> None:
         print("\nPAUSED, waiting for a human:", out["__interrupt__"][0].value)
     print(f"\nmodel calls so far: {model_calls()}\nlibrary now:")
     show_library()
+
+
+class _LLM:
+    """`llm.invoke(prompt).content`, the interface of the LangChain docs examples, on the same DeepSeek model."""
+    durations: list[float] = []                             # seconds taken by each call, to compare with the wall time
+
+    def invoke(self, prompt: str):
+        if not os.getenv("OPENROUTER_API_KEY"):
+            raise RuntimeError(SETUP_HELP)
+        with CALLS.open("a") as f:
+            f.write("call\n")
+        start = time.time()
+        reply = OpenAI(base_url=os.getenv("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1"),
+                       api_key=os.getenv("OPENROUTER_API_KEY"), max_retries=3, timeout=90).chat.completions.create(
+            model=MODEL, messages=[{"role": "system", "content": "Answer in at most 60 words."},
+                                   {"role": "user", "content": prompt}], temperature=0, max_tokens=400).choices[0].message
+        self.durations.append(time.time() - start)
+        return SimpleNamespace(content=reply.content or "")
+
+
+llm = _LLM()
 
 
 def show_graph(app):

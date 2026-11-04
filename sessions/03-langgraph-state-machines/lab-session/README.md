@@ -12,3 +12,5 @@ uv run jupyter lab 03_langgraph_agent.ipynb
 **Files:** `03_langgraph_agent.ipynb` is the only thing you work in. `lab.py` is given (the music app, the model, the nodes, the restart demo): no need to read it.
 
 **You write:** seven blanks, written `___`: four in the router (section 2) and three in the approval step (section 3). The cell under each one tests your answer without calling the model.
+
+**Bonus (sections 6 and 7):** two safety nets for a stuck agent, then a workflow copied from the LangChain docs (parallelization: three model calls at once).
