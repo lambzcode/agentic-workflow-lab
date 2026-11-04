@@ -14,3 +14,5 @@ uv run jupyter lab 03_langgraph_agent.ipynb
 **You write:** seven blanks, written `___`: four in the router (section 2) and three in the approval step (section 3). The cell under each one tests your answer without calling the model.
 
 **Bonus (sections 6 and 7):** two safety nets for a stuck agent, then a workflow copied from the LangChain docs (parallelization: three model calls at once).
+
+**Studio (optional, after the notebook):** `uv run langgraph dev` from this folder, then open the Studio URL it prints (Chrome, Firefox or Edge; a free LangSmith login is asked). Graph `agent_unguarded` deletes the playlist; graph `agent` pauses on `approve`: resume with `{"approve": false, "reason": "no"}` or `{"approve": true}`. `studio.py` contains a finished guard, so read it after your own.

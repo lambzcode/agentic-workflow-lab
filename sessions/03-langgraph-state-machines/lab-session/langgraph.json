@@ -1,0 +1,7 @@
+{
+  "dependencies": ["."],
+  "graphs": {
+    "agent": "./studio.py:agent",
+    "agent_unguarded": "./studio.py:agent_unguarded"
+  }
+}
