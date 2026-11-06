@@ -1,0 +1,9 @@
+{
+  "dependencies": ["."],
+  "graphs": {
+    "memory_agent": "./studio.py:memory_agent"
+  },
+  "store": {
+    "index": {"embed": "./lab.py:embed", "dims": 1536, "fields": ["text"]}
+  }
+}
