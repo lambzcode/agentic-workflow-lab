@@ -1,0 +1,7 @@
+{
+  "dependencies": ["."],
+  "graphs": {
+    "supervisor": "./studio.py:supervisor_team",
+    "handoffs": "./studio.py:handoffs"
+  }
+}
